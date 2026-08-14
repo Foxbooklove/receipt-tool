@@ -26,6 +26,7 @@ export default function App() {
   const [total, setTotal] = useState(0);
   const [elapsed, setElapsed] = useState<number | null>(null);
   const [msg, setMsg] = useState("");
+  const [uploadFails, setUploadFails] = useState(0);
 
   function setUrl(v: string) {
     setOllamaUrl(v);
@@ -50,6 +51,7 @@ export default function App() {
     setDone(0);
     setElapsed(null);
     setMsg("");
+    setUploadFails(0);
 
     const t0 = performance.now();
     const out: Receipt[] = [];
@@ -59,10 +61,14 @@ export default function App() {
       try {
         const r = await parseReceipt(f, ollamaUrl);
         // 이미지 업로드가 실패해도 파싱 결과는 버리지 않는다.
+        // 다만 조용히 넘기지 않는다. 예전에 Storage 정책이 없어 전부 실패하는데도
+        // 화면에 아무 표시가 없어 한참 못 알아챈 적이 있다.
         try {
           r.image_path = await uploadImage(f);
-        } catch {
+        } catch (err) {
           r.image_path = f.name;
+          setUploadFails((n) => n + 1);
+          console.warn("이미지 업로드 실패", f.name, err);
         }
         out.push(r);
       } catch (err) {
@@ -128,7 +134,13 @@ export default function App() {
           <p className="metric">
             {rows.length}건 · {(elapsed / 1000).toFixed(1)}초 · 장당 평균{" "}
             {(elapsed / 1000 / Math.max(rows.length, 1)).toFixed(1)}초
-            {failed > 0 && <span className="warn"> · 실패 {failed}건</span>}
+            {failed > 0 && <span className="warn"> · 파싱 실패 {failed}건</span>}
+          </p>
+        )}
+        {uploadFails > 0 && !busy && (
+          <p className="metric warn">
+            이미지 업로드 {uploadFails}건 실패 — Storage 정책이 없을 수 있습니다.
+            storage-policy.sql 을 Supabase SQL Editor 에서 실행하세요. 파싱 결과 자체는 정상입니다.
           </p>
         )}
       </section>

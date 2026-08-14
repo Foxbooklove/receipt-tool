@@ -17,6 +17,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 초기 스택(Python + Streamlit + SQLite)은 **폐기되었다**. 문서 어디에도 Streamlit·SQLite·pandas가 다시 등장해서는 안 된다.
 
+## 배포 정보
+
+| 항목 | 값 |
+|---|---|
+| 배포 URL | https://receipt-tool-rho.vercel.app |
+| GitHub | https://github.com/Foxbooklove/receipt-tool |
+| Supabase | 프로젝트 `hrezmroqshahkzhskeao`, 테이블 `receipts` / `parse_metrics`, 버킷 `receipts` (public) |
+
+Vercel Deployment 주소는 배포마다 바뀐다. 위 고정 URL만 쓴다.
+환경변수 `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`는 Vercel(Production and Preview)과 로컬 `.env.local` 양쪽에 있다.
+Supabase URL 끝에 `/rest/v1`을 붙이면 전부 404가 난다. 대시보드가 그 형태로 보여주므로 주의.
+
 ## 프로젝트 개요
 
 연구실 예산·실험비·여비 정산 시 영수증을 하나씩 보며 엑셀에 수기 입력하는 작업을 자동화한다.
