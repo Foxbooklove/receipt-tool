@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>연구비 영수증 정리 도구</title>
+    <meta
+      name="description"
+      content="쿠팡 거래명세표와 카드 매출전표 스크린샷을 한 번에 올리면 일자·사용처·금액을 자동으로 뽑아 정산용 엑셀로 내려받는 도구."
+    />
+
+    <!-- 7단계: Search Console 소유권 확인 메타태그를 여기에 붙인다 -->
+    <!-- 6단계: GA4 스니펫을 여기에 붙인다. 측정 ID 발급 후 교체 -->
+    <style>
+      :root { color-scheme: light dark; --line:#d8dae0; --muted:#6b7280; --bg:#fff; --fg:#111827; --panel:#f7f8fa; }
+      @media (prefers-color-scheme: dark) {
+        :root { --line:#33363d; --muted:#9aa1ab; --bg:#14161a; --fg:#e8eaed; --panel:#1b1e24; }
+      }
+      * { box-sizing: border-box; }
+      body { margin:0; background:var(--bg); color:var(--fg);
+             font-family: "Pretendard", -apple-system, "Segoe UI", "Malgun Gothic", sans-serif; }
+      main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 64px; }
+      h1 { font-size: 22px; margin: 0 0 6px; }
+      .sub { color: var(--muted); font-size: 13px; line-height:1.6; margin: 0 0 24px; }
+      .panel { background: var(--panel); border:1px solid var(--line); border-radius:10px;
+               padding:14px 16px; margin-bottom:14px; }
+      .panel label { display:block; font-size:12px; font-weight:600; margin-bottom:6px; }
+      .panel > input[type=text], #ollama { width:100%; padding:8px 10px; font-size:13px;
+               border:1px solid var(--line); border-radius:6px; background:var(--bg); color:var(--fg); }
+      .panel small { display:block; color:var(--muted); font-size:11px; margin-top:6px; line-height:1.5; }
+      progress { width: 240px; margin-left: 12px; vertical-align: middle; }
+      .progress-text { font-size:12px; color:var(--muted); margin-left:8px; }
+      .metric { font-size:12px; color:var(--muted); margin:10px 0 0; }
+      .warn { color:#c2410c; }
+      .hint { font-size:12px; color:var(--muted); margin: 18px 0 8px; }
+      .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
+      table { border-collapse: collapse; width:100%; font-size:13px; }
+      th, td { border-bottom:1px solid var(--line); padding:0; text-align:left; }
+      th { background:var(--panel); padding:9px 10px; font-weight:600; font-size:12px; white-space:nowrap; }
+      td input { width:100%; border:0; padding:8px 10px; font-size:13px; background:transparent;
+                 color:var(--fg); font-family:inherit; }
+      td input:focus { outline:2px solid #3b82f6; outline-offset:-2px; border-radius:3px; }
+      td.idx { padding:8px 10px; color:var(--muted); width:36px; text-align:right; }
+      .num, td input.num { text-align:right; font-variant-numeric: tabular-nums; }
+      tfoot td { font-weight:600; padding:9px 10px; background:var(--panel); }
+      .total { font-size:14px; }
+      .actions { margin-top:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+      button { padding:9px 16px; font-size:13px; font-weight:600; border-radius:7px;
+               border:1px solid var(--line); background:var(--fg); color:var(--bg); cursor:pointer; }
+      button:disabled { opacity:.4; cursor:not-allowed; }
+      .msg { font-size:12px; color:var(--muted); }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

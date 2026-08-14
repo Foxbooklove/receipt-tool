@@ -1,0 +1,11 @@
+# 영수증 원본 — 결제 정보가 포함되므로 절대 커밋하지 않는다.
+# Vercel은 GitHub 저장소를 그대로 배포하므로 커밋되면 공개된다.
+receipts/
+
+node_modules/
+dist/
+.env
+.env.local
+.vercel
+
+.claude/settings.local.json
