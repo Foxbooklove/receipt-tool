@@ -113,7 +113,7 @@ Vercel은 GitHub 저장소를 그대로 빌드하므로 커밋되면 결제 정�
 
 `public/robots.txt`와 `public/sitemap.xml`도 마찬가지로 7단계 증빙이다. 안의 URL은 배포 주소와 일치해야 한다.
 
-## 정적 배포에서 반드시 지킬 두 가지
+## 정적 배포에서 반드시 지킬 세 가지
 
 Vite 정적 배포를 택했기 때문에 생기는 제약이다. 어기면 배포본에서 파싱이 동작하지 않는다.
 
@@ -125,7 +125,27 @@ Vite 정적 배포를 택했기 때문에 생기는 제약이다. 어기면 배�
 
 **2. Ollama에 CORS를 열어야 한다.**
 
-브라우저가 터널 도메인으로 직접 요청하므로 Ollama가 교차 출처 요청을 거부한다. Ollama 실행 전에 `OLLAMA_ORIGINS`를 설정하고 재시작해야 한다. 설정 없이 요청하면 콘솔에 CORS 오류만 뜨고 원인이 드러나지 않으니, 파싱이 안 될 때 가장 먼저 확인할 것.
+브라우저가 터널 도메인으로 직접 요청하므로 Ollama가 교차 출처 요청을 거부한다. Ollama 실행 전에 `OLLAMA_ORIGINS`를 설정하고 재시작해야 한다. 설정 없이 요청하면 콘솔에 CORS 오류만 뜨고 원인이 드러나지 않는다.
+
+`setx OLLAMA_ORIGINS "*"` 는 레지스트리에만 쓴다. **이미 떠 있는 Ollama와 이미 열려 있는 터미널에는 반영되지 않는다.**
+확실하게 하려면 Ollama를 종료하고 `OLLAMA_ORIGINS='*' ollama serve` 로 직접 띄운다.
+반영 여부는 아래 한 줄로 확인한다. `Access-Control-Allow-Origin` 이 나와야 한다.
+
+```powershell
+curl.exe -s -D - -H "Origin: https://receipt-tool-rho.vercel.app" http://localhost:11434/api/tags -o NUL
+```
+
+**3. 터널에 `--http-host-header localhost:11434` 를 반드시 붙인다.**
+
+이 옵션이 없으면 모든 요청이 **403**으로 막힌다. Ollama가 Host 헤더를 검사해 (DNS 리바인딩 방어) `*.trycloudflare.com` 을 거부하기 때문이다.
+CORS 헤더는 정상적으로 나오기 때문에 CORS 문제로 착각하기 쉽다. 403이면 이쪽을 의심할 것.
+
+```powershell
+cloudflared tunnel --url http://localhost:11434 --http-host-header localhost:11434
+```
+
+터널 경유 시 장당 약 3초다 (다른 네트워크의 PC에서 4장 12.5초 실측). 로컬 직접 호출(1.2~2.0초)보다 느린데, 이미지 base64가 터널을 왕복하기 때문이다.
+첫 요청만 연결 수립으로 7~8초 걸리고 이후 빨라진다. 시연 분량을 잡을 때 감안한다.
 
 ## 명령어
 
@@ -157,8 +177,9 @@ ollama ps                    # VRAM 점유 확인
 # CORS 허용 후 Ollama 재시작 (터미널 재시작해야 setx가 반영된다)
 setx OLLAMA_ORIGINS "*"
 
-# 터널 개방 — 출력되는 https URL을 앱 상단 입력 필드에 붙여넣는다
-cloudflared tunnel --url http://localhost:11434
+# 터널 개방 — 출력되는 https URL을 앱의 "파싱 서버 설정"에 붙여넣는다
+# --http-host-header 는 생략하면 안 된다. 아래 3번 항목 참고.
+cloudflared tunnel --url http://localhost:11434 --http-host-header localhost:11434
 ```
 
 ```powershell

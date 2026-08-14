@@ -6,12 +6,12 @@ import { downloadExcel } from "./excel";
 import { configured, uploadImage, saveRows, logMetric } from "./supabase";
 
 const FIELDS = [
-  ["date", "일자"],
-  ["merchant", "사용처"],
-  ["amount", "금액"],
-  ["payment_method", "결제수단"],
-  ["category", "분류"],
-  ["note", "비고"],
+  ["date", "일자", "col-date"],
+  ["merchant", "사용처", ""],
+  ["amount", "금액", "col-money num"],
+  ["payment_method", "결제수단", "col-pay"],
+  ["category", "분류", "col-cat"],
+  ["note", "비고", "col-note"],
 ] as const;
 
 const DEFAULT_URL = "http://localhost:11434";
@@ -196,7 +196,9 @@ export default function App() {
                 <tr>
                   <th />
                   <th />
-                  {FIELDS.map(([, label]) => <th key={label}>{label}</th>)}
+                  {FIELDS.map(([, label, cls]) => (
+                    <th key={label} className={cls || undefined}>{label}</th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
