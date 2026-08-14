@@ -105,6 +105,14 @@ Vercel은 GitHub 저장소를 그대로 빌드하므로 커밋되면 결제 정�
 
 `npm create vite`는 `.gitignore`를 새로 쓰려 한다. 덮어쓰지 말고 병합할 것.
 
+## index.html 에서 지우면 안 되는 것
+
+`index.html`의 GA4 gtag 스니펫(`G-YSKQ76ZBLZ`)은 6단계 지표 수집과 **7단계 Search Console 소유권 확인을 동시에 담당한다.**
+소유권을 이 스니펫으로 자동 확인받았기 때문에, 지우면 Search Console 등록이 풀린다.
+코드를 정리하더라도 이 두 `<script>` 블록은 건드리지 않는다.
+
+`public/robots.txt`와 `public/sitemap.xml`도 마찬가지로 7단계 증빙이다. 안의 URL은 배포 주소와 일치해야 한다.
+
 ## 정적 배포에서 반드시 지킬 두 가지
 
 Vite 정적 배포를 택했기 때문에 생기는 제약이다. 어기면 배포본에서 파싱이 동작하지 않는다.
