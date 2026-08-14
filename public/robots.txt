@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://receipt-tool-rho.vercel.app/sitemap.xml
