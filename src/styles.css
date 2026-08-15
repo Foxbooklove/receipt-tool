@@ -169,6 +169,26 @@ tfoot td { position: sticky; bottom: 0; background: var(--surface-2);
            font-weight: 650; font-size: 13px; }
 tfoot .total { text-align: right; font-size: 15px; font-variant-numeric: tabular-nums; }
 
+
+/* 목록 누적 관련 */
+.section-head .count { color: var(--fg-2); font-weight: 500; margin-left: 4px; }
+.hint { font-size: 13px; color: var(--fg-2); margin: 24px 0; padding: 20px;
+        text-align: center; border: 1px dashed var(--line-2); border-radius: var(--radius); }
+
+td select { width: 100%; border: 0; padding: 9px 10px; font: inherit; font-size: 13px;
+            background: transparent; color: var(--fg); border-radius: 5px;
+            appearance: none; cursor: pointer; }
+td select:hover { background: var(--surface-2); }
+td select:focus { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--surface); }
+
+td.del { width: 40px; text-align: center; }
+button.icon { background: transparent; border: 0; color: var(--fg-3); font-size: 13px;
+              padding: 6px 8px; border-radius: 5px; line-height: 1; }
+button.icon:hover { background: var(--warn-bg); color: var(--warn); }
+
+tr.dup td { background: var(--warn-bg); }
+tr.dup:hover td { background: var(--warn-bg); }
+
 /* 버튼 */
 .actions { display: flex; gap: 10px; align-items: center; margin-top: 18px; flex-wrap: wrap; }
 button {

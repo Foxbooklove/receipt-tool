@@ -1,4 +1,5 @@
 export type Receipt = {
+  id?: number;          // Supabase 에 저장된 행에만 있다. 없으면 아직 저장 전이다.
   date: string;
   merchant: string;
   amount: number;

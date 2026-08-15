@@ -15,6 +15,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 과제 요구사항 원문은 [과제지침.md](과제지침.md)에 따로 있다. 충돌 시 그쪽이 우선한다.
 
+**평가는 코드 품질이 아니라 기획 과정을 본다.** Double Diamond(Discover-Define-Develop-Deliver)와
+문제·고객·시나리오·As-is/To-be·솔루션·KPI 6개 항목이 중심이다.
+`result/`의 발표 자료에 기술 스택 설명과 아키텍처 분석을 넣지 않는다.
+
 초기 스택(Python + Streamlit + SQLite)은 **폐기되었다**. 문서 어디에도 Streamlit·SQLite·pandas가 다시 등장해서는 안 된다.
 
 ## 배포 정보
